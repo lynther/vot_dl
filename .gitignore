@@ -3,3 +3,4 @@ output
 urls.txt
 .vscode
 .venv
+__pycache__
