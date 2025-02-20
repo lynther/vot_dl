@@ -1,0 +1,64 @@
+exclude = [".ruff_cache", ".tox", ".venv", ".vscode", "build", "dist", "venv"]
+line-length = 100
+indent-width = 4
+show-fixes = true
+target-version = "py313"
+
+[lint]
+select = [
+    'A',     # flake8-builtins
+    'ASYNC', # https://docs.astral.sh/ruff/rules/#flake8-async-async
+    'B',     # flake8-bugbear
+    'BLE',   # flake8-blind-except
+    'C4',    # unnecessary comprehensions, map()
+    'COM',   # flake8-commas
+    'DTZ',   # flake8-datetimez
+    'E',     # pycodestyle
+    'ERA',   # No commented out code
+    'EXE',   # flake8-executable
+    'F',     # pyflakes
+    'FLY',   # flynt
+    'G',     # flake8-logging-format
+    'I',     # isort
+    'ICN',   # https://github.com/joaopalmeiro/flake8-import-conventions
+    'ISC',   # https://pypi.org/project/flake8-implicit-str-concat/
+    'LOG',   # flake8-logging
+    'PERF',  # perflint
+    'PIE',   # https://pypi.org/project/flake8-pie/
+    'PLC',   # Pylint conventions
+    'PLE',   # Pylint error
+    'PLW',   # Pylint warnings
+    'PT',    # https://pypi.org/project/flake8-pytest-style/
+    'PTH',   # flake8 use pathlib
+    'RET',   # https://pypi.org/project/flake8-return/
+    'RUF',   # Ruff rules
+    'S',     # https://docs.astral.sh/ruff/rules/#flake8-bandit-s
+    'SIM',   # https://pypi.org/project/flake8-simplify/
+    'T',     # flake8-debugger
+    'TRY',   # tryceratops
+    'UP',    # pyupgrade
+    'W',     # pycodestyle
+]
+ignore = [
+    "S107",
+    "S324",
+    "S603",
+    "S605",
+    "S607",
+    "RUF001",
+    "RUF003",
+    "T201",
+    "PERF401",
+    "SIM102",
+    "ERA001",
+]
+fixable = ["ALL"]
+unfixable = []
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "native"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
