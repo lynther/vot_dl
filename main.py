@@ -106,7 +106,10 @@ def download_videos(urls_file_path: Path, temp_dir_video: Path) -> list[VideoDow
     video_download_results: list[VideoDownloadResult] = []
     futures: list[Future] = []
 
-    with ProcessPoolExecutor(max_workers=5) as executor, urls_file_path.open() as urls_file:
+    with (
+        ProcessPoolExecutor(max_workers=5) as executor,
+        urls_file_path.open() as urls_file,
+    ):
         for url in urls_file:
             futures.append(executor.submit(download_video, url.rstrip(), temp_dir_video))
 
