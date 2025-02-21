@@ -40,16 +40,24 @@ def main():
         print("Файл с ссылками не существует")
         return
 
+    if urls_file_path.stat().st_size == 0:
+        print("Файл с ссылками пустой")
+        return
+
     print("Скачивание видео:")
 
-    video_download_results = download_videos(urls_file_path, temp_dir_video)
-    print("\n")
-    print("Перевод  видео:")
-    exit()
-    translate_video_results = translate_videos(video_download_results, temp_dir_audio)
-    print("\n")
-    print("Объединение аудио дорожек:")
-    merge_audios(translate_video_results, original_sound_ratio, output_dir)
+    if download_results := download_videos(urls_file_path, temp_dir_video):
+        print("\n")
+        print("Перевод  видео:")
+
+        if translate_results := translate_videos(download_results, temp_dir_audio):
+            print("\n")
+            print("Объединение аудио дорожек:")
+            merge_audios(translate_results, original_sound_ratio, output_dir)
+        else:
+            print("Нет результатов перевода")
+    else:
+        print("Нет результатов скачивания видео")
 
 
 if __name__ == "__main__":
