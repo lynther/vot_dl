@@ -7,14 +7,10 @@ from .data_class import TranslateVideoResult
 
 def merge_audio(
     audio_download_result: TranslateVideoResult,
-    original_sound_ratio: float,
+    volume: float,
     output_dir: Path,
 ):
     output_path = Path(output_dir, audio_download_result.video_file_name)
-    filter_complex = [
-        f"[0:a] volume={original_sound_ratio} [original];[original][1:a]",
-        " amix=inputs=2:duration=longest [audio_out]",
-    ]
 
     cmd = [
         "ffmpeg",
@@ -27,7 +23,7 @@ def merge_audio(
         "-b:a",
         "128k",
         "-filter_complex",
-        "".join(filter_complex),
+        f"[0:a] volume={volume} [original];[original][1:a] amix=inputs=2:duration=longest [audio_out]",
         "-map",
         "0:v",
         "-map",
@@ -38,9 +34,6 @@ def merge_audio(
 
     try:
         subprocess.run(cmd, check=True, capture_output=True, text=True)
-    except FileNotFoundError:
-        print("Для объединения дорожки требуется ffmpeg!")
-        return
     except subprocess.CalledProcessError as e:
         print(f"{audio_download_result.video_file_path} - {e.stderr}")
         return
