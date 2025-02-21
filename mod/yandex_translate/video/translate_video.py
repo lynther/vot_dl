@@ -34,9 +34,11 @@ def translate_video(url: str, req_lang: str = "en", res_lang: str = "ru") -> Tra
     except message.DecodeError:
         return TranslateResult(error="Yandex video translation error")
 
+    remaining_time = translate_res.remainingTime if translate_res.status == 2 else -1
+
     return TranslateResult(
         audio_url=translate_res.url,
         status=translate_res.status,
         error="",
-        remaining_time_s=translate_res.remainingTime if translate_res.status else -1,
+        remaining_time_s=remaining_time,
     )
