@@ -1,40 +1,26 @@
-import subprocess
 from concurrent.futures import Future, ProcessPoolExecutor
 from pathlib import Path
+from time import sleep
+
+from mod.yandex_translate.utils import download_audio
+from mod.yandex_translate.video import translate_video
 
 from .data_class import TranslateVideoResult, VideoDownloadResult
 
 
-def translate_video(
+def worker(
     video_download_result: VideoDownloadResult,
     temp_dir_audio: Path,
 ) -> TranslateVideoResult | None:
     audio_file_name = f"{video_download_result.video_name}.mp3"
+    audio_file_path = Path(temp_dir_audio, audio_file_name)
+    tr_result = translate_video(video_download_result.video_url)
 
-    try:
-        result = subprocess.run(
-            [
-                "vot-cli",
-                video_download_result.video_url,
-                "--output",
-                temp_dir_audio,
-                "--output-file",
-                audio_file_name,
-            ],
-            check=True,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-        )
-    except FileNotFoundError:
-        print('Установите "vot-cli"!')
-        return None
+    while tr_result.status == 2:
+        tr_result = translate_video(video_download_result.video_url)
+        sleep(tr_result.remaining_time_s)
 
-    if result.stderr:
-        print("Возникла ошибка при переводе видео")
-        print(result.stderr)
-        return None
-
+    download_audio(tr_result.audio_url, audio_file_path)
     print(f'> "{video_download_result.video_url}"')
 
     return TranslateVideoResult(
@@ -53,7 +39,7 @@ def translate_videos(
 
     with ProcessPoolExecutor(max_workers=10) as executor:
         for video_download_result in video_download_results:
-            futures.append(executor.submit(translate_video, video_download_result, temp_dir_audio))
+            futures.append(executor.submit(worker, video_download_result, temp_dir_audio))
 
     for future in futures:
         if future.result():

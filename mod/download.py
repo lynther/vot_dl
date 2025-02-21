@@ -23,7 +23,7 @@ class NoLogger:
         pass
 
 
-def download_video(url: str, temp_dir_video: Path) -> VideoDownloadResult | None:
+def worker(url: str, temp_dir_video: Path) -> VideoDownloadResult | None:
     yt_dlp_params = {
         "noprogress": True,
         "outtmpl": f"{temp_dir_video}/%(id)s.%(ext)s",
@@ -57,7 +57,7 @@ def download_videos(urls_file_path: Path, temp_dir_video: Path) -> list[VideoDow
         urls_file_path.open() as urls_file,
     ):
         for url in urls_file:
-            futures.append(executor.submit(download_video, url.rstrip(), temp_dir_video))
+            futures.append(executor.submit(worker, url.rstrip(), temp_dir_video))
 
     for future in futures:
         if future.result():

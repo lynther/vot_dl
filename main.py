@@ -8,7 +8,6 @@ from mod.translate import translate_videos
 
 def check_required_apps() -> bool:
     try:
-        subprocess.run(["vot-cli"], check=True, capture_output=True)
         subprocess.run(["ffmpeg", "--help"], check=True, capture_output=True)
     except FileNotFoundError:
         return False
@@ -18,7 +17,7 @@ def check_required_apps() -> bool:
 
 def main():
     if not check_required_apps():
-        print("Без vot-cli или ffmpeg работать не будет :c")
+        print("Без ffmpeg работать не будет :c")
         return
 
     original_sound_ratio = 0.7
