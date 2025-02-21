@@ -25,6 +25,8 @@ pip install -r requirements.txt
 python main.py
 ```
 
+![example](https://github.com/lynther/vot_dl/blob/main/img/example.png "example")
+
 ## TODO
 
 1. Сделать более удобный способ установки настроек
