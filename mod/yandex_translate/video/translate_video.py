@@ -3,9 +3,9 @@ from uuid import uuid4 as uuid
 import httpx
 from google.protobuf import message
 
-from mod.yandex_translate import yandex_proto
-from mod.yandex_translate.utils import build_video_req, get_signature
-from mod.yandex_translate.video.data_class import TranslateResult
+from ...yandex_translate import yandex_proto
+from ...yandex_translate.utils import build_video_req, get_signature
+from ...yandex_translate.video.data_class import TranslateResult
 
 YANDEX_URL = "https://api.browser.yandex.ru/video-translation/translate"
 USER_AGENT = """

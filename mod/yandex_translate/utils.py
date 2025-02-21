@@ -4,7 +4,7 @@ from pathlib import Path
 
 import httpx
 
-from mod.yandex_translate import yandex_proto
+from . import yandex_proto
 
 
 def download_audio(url: str, mp3_path: Path):

@@ -2,10 +2,9 @@ from concurrent.futures import Future, ProcessPoolExecutor
 from pathlib import Path
 from time import sleep
 
-from mod.yandex_translate.utils import download_audio
-from mod.yandex_translate.video import translate_video
-
 from .data_class import TranslateVideoResult, VideoDownloadResult
+from .yandex_translate.utils import download_audio
+from .yandex_translate.video import translate_video
 
 
 def worker(
