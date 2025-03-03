@@ -3,16 +3,6 @@
 # Protobuf Python Version: 4.25.1
 """Generated protocol buffer code."""
 
-try:
-    from google.protobuf import descriptor as _descriptor
-except:
-    import os
-    import sys
-
-    sys.path.append(
-        os.path.dirname(os.path.abspath(__file__)) + "\\..\\protobuf-4.25.2-py3-none-any.whl.pypi",
-    )
-
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import symbol_database as _symbol_database
