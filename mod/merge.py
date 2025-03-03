@@ -23,7 +23,7 @@ def merge_audio(
         "-b:a",
         "128k",
         "-filter_complex",
-        f"[0:a] volume={volume} [original];[original][1:a] amix=inputs=2:duration=longest [audio_out]",
+        f"[0:a] volume={volume} [original];[original][1:a] amix=inputs=2:duration=longest [audio_out]",  # noqa: E501
         "-map",
         "0:v",
         "-map",
@@ -60,4 +60,4 @@ def merge_audios(
             )
     for future in futures:
         if future.result():
-            print(future.result())
+            future.result()
