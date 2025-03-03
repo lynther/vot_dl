@@ -20,7 +20,7 @@ def main():
         print("Без ffmpeg работать не будет :c")
         return
 
-    original_sound_ratio = 0.7
+    original_sound_ratio = 0.5
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)
 
@@ -50,6 +50,7 @@ def main():
         print("Перевод  видео:")
 
         if translate_results := translate_videos(download_results, temp_dir_audio):
+            translate_results = list(filter(lambda x: x is not None, translate_results))
             print("\n")
             print("Объединение аудио дорожек:")
             merge_audios(translate_results, original_sound_ratio, output_dir)

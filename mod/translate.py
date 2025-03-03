@@ -19,6 +19,10 @@ def worker(
         tr_result = translate_video(video_download_result.video_url)
         sleep(tr_result.remaining_time_s)
 
+    if tr_result.audio_url == "":
+        print(f"> {video_download_result.video_url} - Не удалось получить перевод :(")
+        return None
+
     download_audio(tr_result.audio_url, audio_file_path)
     print(f'> "{video_download_result.video_url}"')
 
@@ -32,11 +36,12 @@ def worker(
 def translate_videos(
     video_download_results: list[TranslateVideoResult],
     temp_dir_audio: Path,
-) -> list[TranslateVideoResult]:
-    translate_video_results: list[TranslateVideoResult] = []
+    processes: int = 20,
+) -> list[TranslateVideoResult | None]:
+    translate_video_results: list[TranslateVideoResult | None] = []
     futures: list[Future] = []
 
-    with ProcessPoolExecutor(max_workers=10) as executor:
+    with ProcessPoolExecutor(max_workers=processes) as executor:
         for video_download_result in video_download_results:
             futures.append(executor.submit(worker, video_download_result, temp_dir_audio))
 
