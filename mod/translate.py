@@ -29,14 +29,14 @@ def worker(
     return TranslateVideoResult(
         audio_file_path=Path(temp_dir_audio, audio_file_name),
         video_file_path=video_download_result.video_file_path,
-        video_file_name=f"{video_download_result.video_name}.{video_download_result.video_ext}",
+        video_file_name=f"{video_download_result.video_name}",
     )
 
 
 def translate_videos(
     video_download_results: list[TranslateVideoResult],
     temp_dir_audio: Path,
-    processes: int = 20,
+    processes: int = 2,
 ) -> list[TranslateVideoResult | None]:
     translate_video_results: list[TranslateVideoResult | None] = []
     futures: list[Future] = []

@@ -6,7 +6,6 @@ from pathlib import Path
 class VideoDownloadResult:
     video_url: str
     video_name: str
-    video_ext: str
     video_file_path: Path
 
 
