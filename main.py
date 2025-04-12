@@ -20,6 +20,16 @@ def main():
         print("Без ffmpeg работать не будет :c")
         return
 
+    urls_file_path = Path("urls.txt")
+
+    if not urls_file_path.exists():
+        print("Файл с ссылками не существует")
+        return
+
+    if urls_file_path.stat().st_size == 0:
+        print("Файл с ссылками пустой")
+        return
+
     original_sound_ratio = 0.5
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)
@@ -33,19 +43,9 @@ def main():
     temp_dir_video = Path(temp_dir, "video")
     temp_dir_video.mkdir(exist_ok=True)
 
-    urls_file_path = Path("urls.txt")
-
-    if not urls_file_path.exists():
-        print("Файл с ссылками не существует")
-        return
-
-    if urls_file_path.stat().st_size == 0:
-        print("Файл с ссылками пустой")
-        return
-
     print("Скачивание видео:")
 
-    if download_results := download_videos(urls_file_path, temp_dir_video):
+    if download_results := download_videos(urls_file_path, temp_dir_video, workers=1):
         print("\n")
         print("Перевод  видео:")
 
