@@ -1,6 +1,7 @@
 import hashlib
 import hmac
 from pathlib import Path
+from time import sleep
 
 import httpx
 
@@ -9,8 +10,13 @@ from . import yandex_proto
 
 def download_audio(url: str, mp3_path: Path):
     with mp3_path.open("wb") as f:
-        response = httpx.get(url)
-        f.write(response.content)
+        while True:
+            try:
+                response = httpx.get(url)
+                f.write(response.content)
+                break
+            except httpx.TimeoutException:
+                sleep(5)
 
 
 def build_video_req(url: str, req_lang: str = "en", res_lang: str = "ru") -> str:
