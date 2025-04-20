@@ -1,3 +1,4 @@
 httpx
 protobuf
 yt-dlp
+python-dotenv

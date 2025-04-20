@@ -1,9 +1,14 @@
+import os
 import subprocess
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 from mod.download import download_videos
 from mod.merge import merge_audios
 from mod.translate import translate_videos
+
+load_dotenv()
 
 
 def check_required_apps() -> bool:
@@ -16,6 +21,7 @@ def check_required_apps() -> bool:
 
 
 def main():
+    print(os.environ)
     if not check_required_apps():
         print("Без ffmpeg работать не будет :c")
         return
@@ -31,10 +37,10 @@ def main():
         return
 
     original_sound_ratio = 0.5
-    output_dir = Path("output")
+    output_dir = Path(os.getenv("OUT_DIR"))
     output_dir.mkdir(exist_ok=True)
 
-    temp_dir = Path("temp")
+    temp_dir = Path(os.getenv("TMP_DIR"))
     temp_dir.mkdir(exist_ok=True)
 
     temp_dir_audio = Path(temp_dir, "audio")
@@ -45,11 +51,19 @@ def main():
 
     print("Скачивание видео:")
 
-    if download_results := download_videos(urls_file_path, temp_dir_video, workers=1):
+    if download_results := download_videos(
+        urls_file_path,
+        temp_dir_video,
+        workers=int(os.getenv("DL_WORKERS")),
+    ):
         print("\n")
         print("Перевод  видео:")
 
-        if translate_results := translate_videos(download_results, temp_dir_audio):
+        if translate_results := translate_videos(
+            download_results,
+            temp_dir_audio,
+            workers=int(os.getenv("TR_WORKERS")),
+        ):
             translate_results = list(filter(lambda x: x is not None, translate_results))
             print("\n")
             print("Объединение аудио дорожек:")
