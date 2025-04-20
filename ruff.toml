@@ -1,12 +1,11 @@
 exclude = [".ruff_cache", ".tox", ".venv", ".vscode", "build", "dist", "venv"]
-line-length = 120
+line-length = 100
 indent-width = 4
 show-fixes = true
 target-version = "py313"
 
 [lint]
 select = [
-    'A',     # flake8-builtins
     'ASYNC', # https://docs.astral.sh/ruff/rules/#flake8-async-async
     'B',     # flake8-bugbear
     'BLE',   # flake8-blind-except
@@ -14,7 +13,6 @@ select = [
     'COM',   # flake8-commas
     'DTZ',   # flake8-datetimez
     'E',     # pycodestyle
-    'ERA',   # No commented out code
     'EXE',   # flake8-executable
     'F',     # pyflakes
     'FLY',   # flynt
@@ -29,7 +27,6 @@ select = [
     'PLE',   # Pylint error
     'PLW',   # Pylint warnings
     'PT',    # https://pypi.org/project/flake8-pytest-style/
-    'PTH',   # flake8 use pathlib
     'RET',   # https://pypi.org/project/flake8-return/
     'RUF',   # Ruff rules
     'S',     # https://docs.astral.sh/ruff/rules/#flake8-bandit-s
@@ -42,15 +39,13 @@ select = [
 ignore = [
     "S107",
     "S324",
-    "S603",
     "S605",
     "S607",
     "RUF001",
-    "RUF003",
     "T201",
     "PERF401",
     "SIM102",
-    "ERA001",
+    "S105",
 ]
 fixable = ["ALL"]
 unfixable = []
