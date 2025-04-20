@@ -21,7 +21,6 @@ def check_required_apps() -> bool:
 
 
 def main():
-    print(os.environ)
     if not check_required_apps():
         print("Без ffmpeg работать не будет :c")
         return
